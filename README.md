@@ -22,6 +22,4 @@ The application can be accesses at
 
 https://stansaner.github.io/Console-Finances/
 
-You need to Inspect the webpage and choose the Console tab to see the output which looks like this:
-
-<img src="./App_output_screenshot.png" alt="Application output"/>
+You need to Inspect the webpage and choose the Console tab to see the output.
