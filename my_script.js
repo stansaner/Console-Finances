@@ -9,6 +9,11 @@ var indexLossDecrease = 0;     // Index of the element where greates
 var monthOnMonth = 0; //month-on-month differences
 var sumMonthlyDiff = 0; // cummulator of month-on-month differences
 
+var recordProfitChange = 0; // Tracker of the highest profit increase
+var recordProfitIndex = 0; // which month highest profit change
+var recordLossChange = 0; // Tracker of the loss worsened most
+var recordLossIndex = 0; // which month greates loss change
+
 // The actual code starts here
 // Print ttotal number of months included in the dataset
 
@@ -34,18 +39,41 @@ for (var main_index = 0; main_index < finances.length; main_index++) {
             continue;
         }
       
+         
+        monthOnMonth = finances[main_index][finances[main_index].length - 1] - finances[main_index - 1][finances[main_index - 1].length - 1];
+
+        if (monthOnMonth >= 0) {  // Profit
+            if (monthOnMonth > recordProfitChange) { // Is this month's profit greater
+                                                    // than biggest profit seen so far?
+                recordProfitChange = monthOnMonth;
+                recordProfitIndex = main_index;
+            }
+        } else {  // Loss
+            if (monthOnMonth < recordLossChange) { // Is this month's loss greater
+                                             // than biggest loss seen so far?
+                                             // Loss is a negative number
+                                             // a bigger loss is more negative, i.e.
+                                             // less than recordLoss
+                recordLossChange = monthOnMonth;
+                recordLossIndex = main_index;
+            }
+        }
+
         // month-on-month difference can be a negative number, for example:
         // a big loss in one month (a negative number) -MINUS- a profit 
         // in the previous month gives an even bigger negative number,
         // or a smaller profit minus a larger profit in the previous month,
-        // but the magnitude (the size of that difference)
-        // is a positive number, i.e. the absolute value of that "difference"
+        // but what matters is the MAGNITUDE (the size of that difference)
+        // which is a positive number, i.e. the absolute value of that "difference"
         // So we need to obtain an ABS(value) to get that magnitude.
+        // Such approach gives an information how wildly the profits or losses  
+        // swing from one month to the next.
+        // Simply summing up the month-on-month differences without taking
+        // them as magnitudes (absolute values) and averaging that would 
+        // give a totally non-sensical number with no information value.
+
+        sumMonthlyDiff += Math.abs(monthOnMonth); 
         
-        monthOnMonth = Math.abs(finances[main_index][finances[main_index].length - 1] - finances[main_index - 1][finances[main_index - 1].length - 1]);
-
-        sumMonthlyDiff += monthOnMonth; 
-
 }    
 
 console.log("Net total of Profit/Losses: $" + totalProfitLoss);
@@ -57,10 +85,11 @@ console.log("Net total of Profit/Losses: $" + totalProfitLoss);
 // over the number of panels between the posts. Data points are like fence posts, 
 // the month-on-month differences like fence panels between them.
 
-console.log("Total of all differences: $" + sumMonthlyDiff);
+// console.log("Total of all differences: $" + sumMonthlyDiff);
 
 // Rounding to 2 decimal places is achieved by Math.round(number*100)/100
 console.log("Average Month-on-month Change: $" + Math.round((sumMonthlyDiff/(finances.length - 1)*100))/100);
 
-// while tracking the greatest increase in profits
-// and the greatest decrease in losses
+
+console.log("Greatest Profit Increase: "+finances[recordProfitIndex][0]+" ($"+recordProfitChange+")");
+console.log("When the loss worsened most: "+finances[recordLossIndex][0]+" ($"+recordLossChange+")");
