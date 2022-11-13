@@ -15,3 +15,13 @@ The program performs the following functions:
     - it also finds the month when the loss worsened the most. It could be a month when a previous month's loss deepened most in the subsequent month or when a previous month's profit completely disappeared and swung in a loss or when previous month's profit dropped to the next month's still a profit, but the drop was the biggest negative change.
 
 Such output may be useful for business financial analysis to assist in determining factors that have the most positive and the most negative impact on business outcomes.
+
+## How to use:
+
+The application can be accesses at 
+
+https://stansaner.github.io/Console-Finances/
+
+You need to Inspect the webpage and choose the Console tab to see the output which looks like this:
+
+<img src="./App_output_screenshot.png" alt="Application output"/>
